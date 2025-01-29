@@ -23,12 +23,14 @@ def change_data(args,contacts):
        return "name is not find firstly try to add contact"
 
 def get_number(args,contacts):
-    name = args[0]
-    if name in contacts:
-        return contacts[name]
-    else :
-        return "name is incorrect"
-
+    try:
+        name = args[0]
+        if name in contacts:
+            return contacts[name]
+        else :
+            return "name is incorrect"
+    except IndexError:
+        return "write name that you want to see"
 def get_all_info(contacts):
     info = []
     for name, phone in contacts.items():
@@ -51,9 +53,9 @@ def main():
             print(add_contact(args, contacts))
         elif command == "change":
             print(change_data(args,contacts))
-        elif command == "get_num":
+        elif command == "phone":
             print(get_number(args,contacts))
-        elif command == "get_all":
+        elif command == "all":
             print(get_all_info(contacts))
         else:
             print("Invalid command.")

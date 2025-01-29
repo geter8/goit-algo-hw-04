@@ -5,24 +5,26 @@ from colorama import init, Fore
 # Ініціалізація colorama
 init(autoreset=True)
 
-def list_files_in_directory(path):
-    # Перевіряємо чи існує зазначена директорія
+
+def list_files_in_directory(path, depth=0):
     directory = Path(path)
 
     if not directory.is_dir():
         print(Fore.RED + f"Помилка: {path} не є дійсною директорією.")
         return
 
-    print(Fore.GREEN + f"Содержимое директорії {path}:")
+    # Відступ для візуалізації вкладеності
+    indent = "  " * depth
 
     # Перебираємо вміст директорії
     for item in directory.iterdir():
-        # Якщо це папка - виводимо синім
         if item.is_dir():
-            print(Fore.CYAN + f"Папка: {item.name}")
-        # Якщо це файл - виводимо жовтим
+            print(Fore.CYAN + f"{indent}Папка: {item.name}")
+            # Рекурсивний виклик для вкладених папок
+            list_files_in_directory(item, depth + 1)
         elif item.is_file():
-            print(Fore.YELLOW + f"Файл: {item.name}")
+            print(Fore.YELLOW + f"{indent}Файл: {item.name}")
+
 
 # Головна частина
 if __name__ == "__main__":
